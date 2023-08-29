@@ -19,14 +19,14 @@ st.title('얼굴 교체')
 st.header('Please upload an image that you want to be - The image must feature a single face.')
 
 # upload want_to_file (너가 되고 싶은 이미지)
-want_to_file = st.file_uploader('', type=['jpeg', 'jpg', 'png'])
+want_to_file = st.file_uploader('', type=['jpeg', 'jpg', 'png'], key="1")
 
 
 # set header
 st.header('Please upload your face image - The image must feature a single face.')
 
 # upload source_file (너의 얼굴)
-source_file = st.file_uploader('', type=['jpeg', 'jpg', 'png'])
+source_file = st.file_uploader('', type=['jpeg', 'jpg', 'png'], key="2")
 
 
 """ INSIGHT FACE - #01. DETECT FACES """ 
