@@ -1,3 +1,4 @@
+import hashlib
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
@@ -21,19 +22,29 @@ st.header('Please upload an image that you want to be - The image must feature a
 # upload want_to_file (너가 되고 싶은 이미지)
 want_to_file = st.file_uploader('', type=['jpeg', 'jpg', 'png'], key="1")
 
+# 이미지 해싱 (ins_get_image는 해쉬 이미지만 받음)
+with open(want_to_file, "rb") as f:
+    hash_want_to_file = hashlib.sha256(f.read()).hexdigest()
+
 # set header
 st.header('Please upload your face image - The image must feature a single face.')
 
 # upload source_file (너의 얼굴)
 source_file = st.file_uploader('', type=['jpeg', 'jpg', 'png'], key="2")
 
+# 이미지 해싱 (ins_get_image는 해쉬 이미지만 받음)
+with open(source_file, "rb") as f:
+    hash_source_file = hashlib.sha256(f.read()).hexdigest()
+
+
 """ INSIGHT FACE - #01. DETECT FACES """ 
 app = FaceAnalysis(name="buffalo_l")
 app.prepare(ctx_id=0, det_size=(640,640))
 
 
-source_img = ins_get_image(source_file)
-want_to_img = ins_get_image(want_to_file)
+# 에러 발생: TypeError: unhashable type: 'UploadedFile'
+source_img = ins_get_image(hash_source_file)
+want_to_img = ins_get_image(hash_want_to_file)
 
 
 source_face = app.get(source_img)
@@ -48,8 +59,9 @@ res = want_to_img.copy()
 res = swapper.get(res, faces[0], source_face, paste_back=True)
 
 """ SHOW SWAPPED FACE """
-st.image(res[:, :, ::-1], caption="바뀐 당신의 얼굴")
-plt.show()
+image_ = Image.open(res).convert('RGB')
+st.image(image_, use_column_width=True, caption="바뀐 당신의 얼굴")
+
 
 
 # load classifier
