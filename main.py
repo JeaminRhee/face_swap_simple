@@ -25,7 +25,7 @@ want_to_file = st.file_uploader('', type=['jpeg', 'jpg', 'png'], key="1")
 if want_to_file is not None:
     # 이미지 해싱 (ins_get_image는 해쉬 이미지만 받음)
     # TypeError: expected str, bytes or os.PathLike object, not UploadedFile
-    with open(want_to_file.name, "rb") as f:
+    with open("/"+want_to_file.name, "rb") as f:
         hash_want_to_file = hashlib.sha256(f.read()).hexdigest()
 
 # set header
@@ -36,7 +36,7 @@ source_file = st.file_uploader('', type=['jpeg', 'jpg', 'png'], key="2")
 
 if source_file is not None:
     # 이미지 해싱 (ins_get_image는 해쉬 이미지만 받음)
-    with open(source_file.name, "rb") as f:
+    with open("/"+source_file.name, "rb") as f:
         hash_source_file = hashlib.sha256(f.read()).hexdigest()
 
 
