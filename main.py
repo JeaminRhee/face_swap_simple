@@ -20,22 +20,20 @@ st.header('Please upload an image that you want to be - The image must feature a
 
 # upload want_to_file (너가 되고 싶은 이미지)
 want_to_file = st.file_uploader('', type=['jpeg', 'jpg', 'png'], key="1")
-want_to_file_imread = cv2.imread(want_to_file)
 
 # set header
 st.header('Please upload your face image - The image must feature a single face.')
 
 # upload source_file (너의 얼굴)
 source_file = st.file_uploader('', type=['jpeg', 'jpg', 'png'], key="2")
-source_file_imread = cv2.imread(source_file)
 
 """ INSIGHT FACE - #01. DETECT FACES """ 
 app = FaceAnalysis(name="buffalo_l")
 app.prepare(ctx_id=0, det_size=(640,640))
 
 
-source_img = ins_get_image(source_file_imread)
-want_to_img = ins_get_image(want_to_file_imread)
+source_img = ins_get_image(source_file)
+want_to_img = ins_get_image(want_to_file)
 
 
 source_face = app.get(source_img)
