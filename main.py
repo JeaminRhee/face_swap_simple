@@ -22,9 +22,11 @@ st.header('Please upload an image that you want to be - The image must feature a
 # upload want_to_file (너가 되고 싶은 이미지)
 want_to_file = st.file_uploader('', type=['jpeg', 'jpg', 'png'], key="1")
 
-# 이미지 해싱 (ins_get_image는 해쉬 이미지만 받음)
-with open(want_to_file, "rb") as f:
-    hash_want_to_file = hashlib.sha256(f.read()).hexdigest()
+if want_to_file is not None:
+    # 이미지 해싱 (ins_get_image는 해쉬 이미지만 받음)
+    # TypeError: expected str, bytes or os.PathLike object, not UploadedFile
+    with open(want_to_file.name, "rb") as f:
+        hash_want_to_file = hashlib.sha256(f.read()).hexdigest()
 
 # set header
 st.header('Please upload your face image - The image must feature a single face.')
@@ -32,9 +34,10 @@ st.header('Please upload your face image - The image must feature a single face.
 # upload source_file (너의 얼굴)
 source_file = st.file_uploader('', type=['jpeg', 'jpg', 'png'], key="2")
 
-# 이미지 해싱 (ins_get_image는 해쉬 이미지만 받음)
-with open(source_file, "rb") as f:
-    hash_source_file = hashlib.sha256(f.read()).hexdigest()
+if source_file is not None:
+    # 이미지 해싱 (ins_get_image는 해쉬 이미지만 받음)
+    with open(source_file.name, "rb") as f:
+        hash_source_file = hashlib.sha256(f.read()).hexdigest()
 
 
 """ INSIGHT FACE - #01. DETECT FACES """ 
